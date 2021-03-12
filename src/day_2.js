@@ -20,7 +20,6 @@ exports.exec = async function(req, res)
         const max = parseInt(match[2]);
         const character = match[3];
         const password = match[4];
-
         
         // retorna a quantidade de caracteres encontrados
         const count = [...password].filter((c) => c === character).length;
@@ -33,7 +32,39 @@ exports.exec = async function(req, res)
         valid++;
         
     }
-    console.log(valid)
+    console.log('Star one: ', valid)
+
+
+    valid = 0;
+    for (let index = 0; index < file.length; index++) {
+        const el = file[index];
+        const match = regex.exec(el);
+
+        // se não passar no teste do regex passa para o próximo
+        if(!match){
+            continue;
+        }
+
+        // nivelar os indesses
+        const a = parseInt(match[1]) - 1;
+        const b = parseInt(match[2]) - 1;
+        const character = match[3];
+        const password = match[4];
+        
+        // verificar se ambos dos caracteres são iguais
+        if(password[a] === password[b]){
+            continue;
+        }
+
+        //verificar se os caracteres são existem em ambos dos locais
+        if(password[a] !== character && password[b] !== character){
+            continue;
+        }
+              
+        valid++;
+    }
+
+    console.log('Star two: ', valid)
     
 
 }
